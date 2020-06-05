@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "246261606428",
+    "firebase_url": "https://fehlhaber-ff9a7.firebaseio.com",
+    "project_id": "fehlhaber-ff9a7",
+    "storage_bucket": "fehlhaber-ff9a7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246261606428:android:e142087e79309a892d17d9",
+        "android_client_info": {
+          "package_name": "com.example.fehlhaber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246261606428-qlfeg9vnhbp164u9lamf5pg05e0dg7a7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAu4WG3R4S2ksOItYrW7Z6SS4czezTKFDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246261606428-qlfeg9vnhbp164u9lamf5pg05e0dg7a7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
