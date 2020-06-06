@@ -2,20 +2,26 @@ package com.example.fehlhaber;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,58 +29,110 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private PdfDocument pdfDoc = new PdfDocument();
-    //https://www.youtube.com/watch?v=RjpFwkfRM3U
-
     private Button okButton;
+    private EditText lastNameView;
+    private EditText nameView;
+    private EditText plzView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        lastNameView = findViewById(R.id.lastName);
+        nameView = findViewById(R.id.firstName);
+        plzView = findViewById(R.id.plz);
+
         Button sendData = findViewById(R.id.saveData);
         sendData.setOnClickListener(this);
+
+        Button generatePdf = findViewById(R.id.generatePdf);
+        generatePdf.setOnClickListener(this);
 
         okButton = findViewById(R.id.okButton);
         okButton.setVisibility(View.GONE);
 
+        ActivityCompat.requestPermissions(MainActivity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                PackageManager.PERMISSION_GRANTED);
     }
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.saveData: {
+                String lastName = lastNameView.getText().toString();
+                String name = nameView.getText().toString();
+                String plz = plzView.getText().toString();
 
-        EditText lastNameView = findViewById(R.id.lastName);
-        String lastName = lastNameView.getText().toString();
+                // Create a new user
+                Map<String, Object> user = new HashMap<>();
+                user.put("first", name);
+                user.put("last", lastName);
+                user.put("plz", plz);
 
-        EditText nameView = findViewById(R.id.firstName);
-        String name = nameView.getText().toString();
-        Log.d("maul", "Name: " + name);
+                // Add a new document with a generated ID
+                db.collection("users").document(lastName)
+                        .set(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("conan", "DocumentSnapshot successfully written!");
+                                deactivateForm();
+                                Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.w("conan", "Error writing document", e);
+                            }
+                        });
+                break;
+            }
+            case R.id.generatePdf: {
+                createMyPDF(v);
+            }
+        }
+    }
 
-        EditText plzView = findViewById(R.id.plz);
-        String plz = plzView.getText().toString();
+    private void createMyPDF(View view){
+        //https://www.youtube.com/watch?v=RjpFwkfRM3U
+        PdfDocument myPdfDocument = new PdfDocument();
+        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
+        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
 
-        // Create a new user
-        Map<String, Object> user = new HashMap<>();
-        user.put("first", name);
-        user.put("last", lastName);
-        user.put("plz", plz);
+        Paint myPaint = new Paint();
+        String myString = " Paul Hogen";
+        int x = 10, y=25;
 
-        // Add a new document with a generated ID
-        db.collection("users").document(lastName)
-                .set(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("maul", "DocumentSnapshot successfully written!");
-                        okButton.setVisibility(View.VISIBLE);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("maul", "Error writing document", e);
-                    }
-                });
+        myPage.getCanvas().drawText(myString, x, y, myPaint);
+        myPage.getCanvas().drawLine(10, 30, 100, 30, myPaint);
+        myPdfDocument.finishPage(myPage);
+
+        String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/myPDFFile.pdf";
+        File myFile = new File(myFilePath);
+        try {
+            myPdfDocument.writeTo(new FileOutputStream(myFile));
+            Toast.makeText(getApplicationContext(), "PDF erfolgreich erstellt!",
+                    Toast.LENGTH_LONG).show();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        myPdfDocument.close();
+    }
+
+
+    private void deactivateForm() {
+        okButton.setVisibility(View.VISIBLE);
+        lastNameView.setFocusable(false);
+        lastNameView.setTextColor(1);
+        nameView.setFocusable(false);
+        nameView.setTextColor(66);
+        plzView.setFocusable(false);
+        plzView.setTextColor(0);
     }
 }

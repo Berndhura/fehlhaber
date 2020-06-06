@@ -42,6 +42,12 @@
         android:text="Speichern" />
 
     <Button
+        android:id="@+id/generatePdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="PDF erstellen" />
+
+    <Button
         android:id="@+id/okButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
