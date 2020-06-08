@@ -188,7 +188,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses. " />
+                android:text="Der Auftrag läuft vom ____________ bis ______________ .
+Wird er nicht unter Einhaltung einer Monatsfrist schriftlich gekündigt, verlängert er sich
+stillschweigend jeweils um ein Vierteljahr.
+" />
 
         </LinearLayout>
 
@@ -227,12 +230,25 @@
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses. " />
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayoutSign" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:text="Unterschrift">
+
+            </TextView>
+
+        </LinearLayout>
 
 
         <Button
