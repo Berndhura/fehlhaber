@@ -30,18 +30,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     private Button okButton;
-    private EditText lastNameView;
     private EditText nameView;
-    private EditText plzView;
+
+    //private EditText plzView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lastNameView = findViewById(R.id.lastName);
-        nameView = findViewById(R.id.firstName);
-        plzView = findViewById(R.id.plz);
+        nameView = findViewById(R.id.fullName);
+
+        //plzView = findViewById(R.id.plz);
 
         Button sendData = findViewById(R.id.saveData);
         sendData.setOnClickListener(this);
@@ -61,18 +61,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.saveData: {
-                String lastName = lastNameView.getText().toString();
                 String name = nameView.getText().toString();
-                String plz = plzView.getText().toString();
+                //String plz = plzView.getText().toString();
 
                 // Create a new user
                 Map<String, Object> user = new HashMap<>();
                 user.put("first", name);
-                user.put("last", lastName);
-                user.put("plz", plz);
+                //user.put("last", lastName);
+               // user.put("plz", plz);
 
                 // Add a new document with a generated ID
-                db.collection("users").document(lastName)
+                db.collection("users").document("test")
                         .set(user)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -109,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         myPage.getCanvas().drawText(myString, x, y, myPaint);
         myPage.getCanvas().drawLine(10, 30, 100, 30, myPaint);
+
         myPdfDocument.finishPage(myPage);
 
         String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/myPDFFile.pdf";
@@ -128,11 +128,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void deactivateForm() {
         okButton.setVisibility(View.VISIBLE);
-        lastNameView.setFocusable(false);
-        lastNameView.setTextColor(1);
+        nameView.setFocusable(false);
+        nameView.setTextColor(1);
         nameView.setFocusable(false);
         nameView.setTextColor(66);
-        plzView.setFocusable(false);
-        plzView.setTextColor(0);
+        //plzView.setFocusable(false);
+       // plzView.setTextColor(0);
     }
 }
