@@ -203,12 +203,12 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginRight="8dp"
-                android:text="§ 2 Auftragsdauer" />
+                android:text="§ 3 Alleinauftragspflichten" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses. " />
+                android:text="Der Makler verpflichtet sich, a) diesen Maklerauftrag fachgerecht, nachhaltig und unter Ausnutzung aller sich ergebenden Abschlusschancen zu bearbeiten, b) den Auftraggeber über die Durchsetzbarkeit seiner Preisforderungen und sonstigen Angebotsbedingungen nach bestem Wissen und Gewissen aufzuklären. " />
 
         </LinearLayout>
 
@@ -223,7 +223,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginRight="8dp"
-                android:text="§ 2 Auftragsdauer" />
+                android:text="§ 4 Alleinauftragspflichten des Auftraggebers " />
 
             <TextView
                 android:layout_width="wrap_content"
