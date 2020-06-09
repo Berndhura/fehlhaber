@@ -57,20 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*nameView = findViewById(R.id.fullName);
-         Button sendData = findViewById(R.id.saveData);
-        sendData.setOnClickListener(this);
-
-        Button generatePdf = findViewById(R.id.generatePdf);
-        generatePdf.setOnClickListener(this);
-
-        okButton = findViewById(R.id.okButton);
-        okButton.setVisibility(View.GONE);
-
-        LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
-        CaptureSignatureView mSig = new CaptureSignatureView(this, null);
-        mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);*/
-
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
