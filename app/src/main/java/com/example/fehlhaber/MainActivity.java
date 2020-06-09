@@ -3,23 +3,36 @@ package com.example.fehlhaber;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.core.OrderBy;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +42,11 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private CollectionReference notebookRef = db.collection("users");
 
+    private NoteAdapter adapter;
+
+    private FloatingActionButton newNote;
     private Button okButton;
     private EditText nameView;
 
@@ -40,11 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nameView = findViewById(R.id.fullName);
-
-        //plzView = findViewById(R.id.plz);
-
-        Button sendData = findViewById(R.id.saveData);
+        /*nameView = findViewById(R.id.fullName);
+         Button sendData = findViewById(R.id.saveData);
         sendData.setOnClickListener(this);
 
         Button generatePdf = findViewById(R.id.generatePdf);
@@ -55,89 +69,54 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
         CaptureSignatureView mSig = new CaptureSignatureView(this, null);
-        mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);*/
 
         ActivityCompat.requestPermissions(MainActivity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 PackageManager.PERMISSION_GRANTED);
+
+        newNote = findViewById(R.id.button_add_note);
+        newNote.setOnClickListener(this);
+
+        getFriendList();
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.saveData: {
-                String name = nameView.getText().toString();
-                //String plz = plzView.getText().toString();
 
-                // Create a new user
-                Map<String, Object> user = new HashMap<>();
-                user.put("first", name);
-                //user.put("last", lastName);
-               // user.put("plz", plz);
-
-                // Add a new document with a generated ID
-                db.collection("users").document("test")
-                        .set(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("conan", "DocumentSnapshot successfully written!");
-                                deactivateForm();
-                                Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("conan", "Error writing document", e);
-                            }
-                        });
-                break;
-            }
-            case R.id.generatePdf: {
-                createMyPDF(v);
+            case R.id.button_add_note: {
+                Intent intent = new Intent(this, Vertrag.class);
+                //intent.putExtra(EXTRA_MESSAGE, message);
+                startActivity(intent);
             }
         }
     }
 
-    private void createMyPDF(View view){
-        //https://www.youtube.com/watch?v=RjpFwkfRM3U
-        PdfDocument myPdfDocument = new PdfDocument();
-        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
-        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
+    private void getFriendList(){
+        Query query = notebookRef.orderBy("last", Query.Direction.DESCENDING);
 
-        Paint myPaint = new Paint();
-        String myString = " Paul Hogen";
-        int x = 10, y=25;
+        FirestoreRecyclerOptions<Note> options = new FirestoreRecyclerOptions.Builder<Note>()
+                .setQuery(query, Note.class)
+                .build();
 
-        myPage.getCanvas().drawText(myString, x, y, myPaint);
-        myPage.getCanvas().drawLine(10, 30, 100, 30, myPaint);
+        adapter = new NoteAdapter(options);
 
-        myPdfDocument.finishPage(myPage);
-
-        String myFilePath = Environment.getExternalStorageDirectory().getPath() + "/myPDFFile.pdf";
-        File myFile = new File(myFilePath);
-        try {
-            myPdfDocument.writeTo(new FileOutputStream(myFile));
-            Toast.makeText(getApplicationContext(), "PDF erfolgreich erstellt!",
-                    Toast.LENGTH_LONG).show();
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-
-        myPdfDocument.close();
+        RecyclerView rv = findViewById(R.id.users_list);
+        rv.setHasFixedSize(true);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setAdapter(adapter);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
+    }
 
-    private void deactivateForm() {
-        okButton.setVisibility(View.VISIBLE);
-        nameView.setFocusable(false);
-        nameView.setTextColor(1);
-        nameView.setFocusable(false);
-        nameView.setTextColor(66);
-        //plzView.setFocusable(false);
-       // plzView.setTextColor(0);
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
 }
