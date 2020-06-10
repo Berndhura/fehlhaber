@@ -248,7 +248,8 @@ stillschweigend jeweils um ein Vierteljahr.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="vertical" >
+        android:orientation="horizontal"
+        android:background="#223344">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -262,12 +263,6 @@ stillschweigend jeweils um ein Vierteljahr.
                 android:text="Unterschrift" />
 
         </LinearLayout>
-
-        <Button
-            android:id="@+id/generatePdf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PDF erstellen" />
 
     </LinearLayout>
 

@@ -31,12 +31,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
-public class Vertrag extends AppCompatActivity implements View.OnClickListener {
+public class Vertrag extends AppCompatActivity {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText nameView;
-    private MenuItem saveBtn;
-    private MenuItem saved_ok;
+    private Menu myMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +44,10 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
         nameView = findViewById(R.id.fullName);
 
-        Button generatePdf = findViewById(R.id.generatePdf);
-        generatePdf.setOnClickListener(this);
-
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        saveBtn = findViewById(R.id.save_botton);
-        saved_ok = findViewById(R.id.ok_saved);
-
-        LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
+        LinearLayout mContent = findViewById(R.id.linearLayoutSign);
         CaptureSignatureView mSig = new CaptureSignatureView(this, null);
         mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
@@ -64,6 +57,8 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        myMenu = menu;
+        myMenu.findItem(R.id.ok_saved).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -73,6 +68,9 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         switch (item.getItemId()) {
             case R.id.save_botton:
                 saveDocument();
+                return true;
+            case R.id.create_pdf:
+                createMyPDF();
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
@@ -108,17 +106,6 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
                 });
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-
-            case R.id.generatePdf: {
-                createMyPDF();
-                break;
-            }
-        }
-    }
-
     private void createMyPDF(){
         //https://www.youtube.com/watch?v=RjpFwkfRM3U
         PdfDocument myPdfDocument = new PdfDocument();
@@ -149,11 +136,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void deactivateForm() {
-       /*nameView.setFocusable(false);
-        nameView.setTextColor(1);
-        nameView.setFocusable(false);
-        nameView.setTextColor(66);*/
-       //saveBtn.setVisible(false);
-       //saved_ok.setVisible(true);
+        myMenu.findItem(R.id.save_botton).setVisible(false);
+        myMenu.findItem(R.id.ok_saved).setVisible(true);
     }
 }
