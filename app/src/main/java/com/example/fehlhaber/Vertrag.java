@@ -1,12 +1,13 @@
 package com.example.fehlhaber;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,11 +33,7 @@ import androidx.appcompat.widget.Toolbar;
 public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    private Button okButton;
     private EditText nameView;
-
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +41,11 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         setContentView(R.layout.verkaeufer);
 
         nameView = findViewById(R.id.fullName);
-        Button sendData = findViewById(R.id.saveData);
-        sendData.setOnClickListener(this);
 
         Button generatePdf = findViewById(R.id.generatePdf);
         generatePdf.setOnClickListener(this);
 
-        okButton = findViewById(R.id.okButton);
-        okButton.setVisibility(View.GONE);
-
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
@@ -63,39 +55,57 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.save_botton:
+                saveDocument();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void saveDocument() {
+        String name = nameView.getText().toString();
+
+        // Create a new user
+        Date currentTime = Calendar.getInstance().getTime();
+        Map<String, Object> user = new HashMap<>();
+        user.put("first", name);
+        user.put("last", name);
+        user.put("date", currentTime);
+
+        // Add a new document with a generated ID
+        db.collection("users").document(name)
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("conan", "DocumentSnapshot successfully written!");
+                        deactivateForm();
+                        Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
+                                Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("conan", "Error writing document", e);
+                    }
+                });
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.saveData: {
-                String name = nameView.getText().toString();
-                //String plz = plzView.getText().toString();
 
-                // Create a new user
-                Date currentTime = Calendar.getInstance().getTime();
-                Map<String, Object> user = new HashMap<>();
-                user.put("first", name);
-                user.put("last", name);
-                user.put("date", currentTime);
-
-                // Add a new document with a generated ID
-                db.collection("users").document(name)
-                        .set(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d("conan", "DocumentSnapshot successfully written!");
-                                deactivateForm();
-                                Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("conan", "Error writing document", e);
-                            }
-                        });
-                break;
-            }
             case R.id.generatePdf: {
                 createMyPDF();
                 break;
@@ -133,7 +143,6 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void deactivateForm() {
-        okButton.setVisibility(View.VISIBLE);
         nameView.setFocusable(false);
         nameView.setTextColor(1);
         nameView.setFocusable(false);
