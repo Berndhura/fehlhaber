@@ -19,6 +19,14 @@
                 android:fontFamily="sans-serif-condensed"
                 android:textSize="20sp" />
 
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/name"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="20sp" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

@@ -20,6 +20,7 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
     @Override
     protected void onBindViewHolder(@NonNull NoteHolder noteHolder, int i, @NonNull Note note) {
         noteHolder.last.setText(note.getLast());
+        //noteHolder.date.setText((note.getDate() != null) ? note.getDate().toString(): "Maul");
     }
 
     @NonNull
@@ -27,16 +28,18 @@ public class NoteAdapter extends FirestoreRecyclerAdapter<Note, NoteAdapter.Note
     public NoteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item,
                 parent, false);
-
         return new NoteHolder(v);
     }
 
     public class NoteHolder extends RecyclerView.ViewHolder {
 
         TextView last;
+       // TextView date;
 
         public NoteHolder(View itemView) {
             super(itemView);
-            last = itemView.findViewById(R.id.name);        }
+            last = itemView.findViewById(R.id.name);
+           // date = itemView.findViewById(R.id.date);
+        }
     }
 }

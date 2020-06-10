@@ -1,18 +1,24 @@
 package com.example.fehlhaber;
 
+import com.google.firebase.Timestamp;
+
 public class Note {
 
     public String getLast() {
         return last;
     }
-
-    private String last;
-
-    public Note() {
-
+    public Timestamp  getDate() {
+        return date;
     }
 
-    public Note(String last) {
+    private String last;
+    private Timestamp  date;
+
+    public Note() { }
+
+    public Note(String last, Timestamp date) {
+
         this.last = last;
+        this.date = date;
     }
 }

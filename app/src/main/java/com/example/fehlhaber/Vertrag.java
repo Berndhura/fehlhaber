@@ -19,11 +19,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 
 public class Vertrag extends AppCompatActivity implements View.OnClickListener {
@@ -32,6 +35,8 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
     private Button okButton;
     private EditText nameView;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,9 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         okButton = findViewById(R.id.okButton);
         okButton.setVisibility(View.GONE);
 
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
         CaptureSignatureView mSig = new CaptureSignatureView(this, null);
         mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -62,10 +70,11 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
                 //String plz = plzView.getText().toString();
 
                 // Create a new user
+                Date currentTime = Calendar.getInstance().getTime();
                 Map<String, Object> user = new HashMap<>();
                 user.put("first", name);
                 user.put("last", name);
-                // user.put("plz", plz);
+                user.put("date", currentTime);
 
                 // Add a new document with a generated ID
                 db.collection("users").document(name)

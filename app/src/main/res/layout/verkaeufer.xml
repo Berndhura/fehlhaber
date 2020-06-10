@@ -5,12 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:weightSum="6"
     tools:context=".MainActivity">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_weight="4">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -235,44 +240,52 @@ stillschweigend jeweils um ein Vierteljahr.
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/linearLayoutSign" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="250dp"
-                    android:text="Unterschrift">
-
-                </TextView>
-
-            </LinearLayout>
-
-
-            <Button
-                android:id="@+id/saveData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Speichern" />
-
-            <Button
-                android:id="@+id/generatePdf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PDF erstellen" />
-
-            <Button
-                android:id="@+id/okButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#8BC34A"
-                tools:text="Gespeichert"
-                tools:textColor="#ffffff" />
-
         </LinearLayout>
 
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/linearLayoutSign" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="250dp"
+                android:text="Unterschrift">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/saveData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Speichern" />
+
+        <Button
+            android:id="@+id/generatePdf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="PDF erstellen" />
+
+        <Button
+            android:id="@+id/okButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#8BC34A"
+            tools:text="Gespeichert"
+            tools:textColor="#ffffff" />
+
+
+    </LinearLayout>
 
 </LinearLayout>
