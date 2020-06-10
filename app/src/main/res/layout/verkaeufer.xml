@@ -259,9 +259,7 @@ stillschweigend jeweils um ein Vierteljahr.
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
-                android:text="Unterschrift">
-
-            </TextView>
+                android:text="Unterschrift" />
 
         </LinearLayout>
 

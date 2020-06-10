@@ -7,4 +7,9 @@
         android:title="save"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/ok_saved"
+        android:icon="@drawable/ic_cloud_done_24"
+        android:title="saved"
+        app:showAsAction="always"/>
+
 </menu>

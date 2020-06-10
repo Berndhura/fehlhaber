@@ -1,5 +1,6 @@
 package com.example.fehlhaber;
 
+import android.content.ClipData;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
@@ -34,6 +35,8 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EditText nameView;
+    private MenuItem saveBtn;
+    private MenuItem saved_ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,9 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        saveBtn = findViewById(R.id.save_botton);
+        saved_ok = findViewById(R.id.ok_saved);
 
         LinearLayout mContent = (LinearLayout) findViewById(R.id.linearLayoutSign);
         CaptureSignatureView mSig = new CaptureSignatureView(this, null);
@@ -143,9 +149,11 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void deactivateForm() {
-        nameView.setFocusable(false);
+       /*nameView.setFocusable(false);
         nameView.setTextColor(1);
         nameView.setFocusable(false);
-        nameView.setTextColor(66);
+        nameView.setTextColor(66);*/
+       //saveBtn.setVisible(false);
+       //saved_ok.setVisible(true);
     }
 }
