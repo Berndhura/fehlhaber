@@ -106,7 +106,7 @@ public class CaptureSignatureView extends View {
         return true;
     }
 
-    public void ClearCanvas() {
+    public void clearCanvas() {
         _Canvas.drawColor(Color.WHITE);
         invalidate();
     }

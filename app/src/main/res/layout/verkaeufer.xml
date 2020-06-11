@@ -20,7 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp" >
 
             <TextView
                 android:layout_width="match_parent"
@@ -29,7 +30,7 @@
                 android:fontFamily="sans-serif-black"
                 android:text="Qualifizierter Makler-Allein-Auftrag"
                 android:textAlignment="center"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -231,12 +232,167 @@ stillschweigend jeweils um ein Vierteljahr.
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 4 Alleinauftragspflichten des Auftraggebers " />
+                    android:text="§ 4 Alleinauftragspflichten\ndes Auftraggebers " />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses. " />
+                    android:text="Der Auftraggeber ist demgegenüber verpflichtet,\n a) während der Auftragslaufzeit keine eigenen Bemühungen zum Verkauf des
+Objektes zu unternehmen. Sollte er dennoch Kaufinteressenten für das Objekt
+gewinnen können, so sind diese an den Makler zu verweisen. \n b) während der Auftragslaufzeit keine Maklerdienste Dritter in Bezug auf das
+Auftragsobjekt in Anspruch zu nehmen. \n c) dem Makler alle Angaben vollständig und richtig zu machen, die er für die
+Durchführung dieses Auftrags benötigt. " />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp"
+                android:text="§ 5Maklergebühr" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="a) Der Auftraggeber verpflichtet sich, dem Makler eine Provision in Höhe von ___ %
+des Gesamtkaufpreises einschließlich Mehrwertsteuer zu zahlen, sobald der Vertrag
+mit einem vom Makler nachgewiesenen Interessenten zustandegekommen ist oder
+der Makler den Vertragsabschluss vermittelt hat. " />
+
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_marginRight="8dp"
+                android:text="§ 6Aufwendungsersatz " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="Der Auftaggeber ist verpflichtet, dem Makler die Aufwendungen zu ersetzen, wenn er
+während der Auftragslaufzeit seine Verkaufsabsicht aufgibt, mit Interessenten des
+Maklers nicht verhandelt oder die Durchführung des Auftrags durch Änderung der
+Angebotsbedingungen oder auf sonstige Weise erschwert.
+ Der Aufwendungsersatz wird am Tage der Auftragsbeendigung fällig. Sofern der
+Auftraggeber die vereinbarte Maklergebühr zu bezahlen hat, wird ein etwa geleisteter
+Aufwendungsersatz voll angerechnet." />
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginRight="8dp"
+                    android:text="§ 7 Berechnung des\nAufwandes " />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="a) Inserats- und Prospektkosten, Porti, Telefonate u.a.m., sind auf Nachweis\nabzurechnen.
+\nb) Für Reise- und Pkw-Kosten gelten die nach der Einkommensteuer zulässigen
+Ansätze. " />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginRight="8dp"
+                    android:text="§ 8 Schadensersatz" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Falls der Auftraggeber für Miteigentümer ohne Vertretungsvollmacht handelte und der
+Makler dies nicht wusste, oder falls der Auftraggeber seine Vertragspflichten verletzt,
+ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginRight="8dp"
+                    android:text="§ 9 Vorzeitige Kündigung\ndurch den Auftraggeber" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Der Auftraggeber kann den Makler-Allein-Auftrag vorzeitig widerrufen, wenn der\nMakler nach vorheriger schriftlicher Abmahnung gegen seine Tätigkeitspflicht (Ziffer 3)\nverstoßen hat.  " />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="16dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:layout_marginRight="8dp"
+                    android:text="§ 10 Außendarstellung" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:text="Folgende Außendarstellung wird vereinbart" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bilder"
+                    android:id="@+id/bilder1" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bilder"
+                    android:id="@+id/bilder2" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bilder"
+                    android:id="@+id/bilder3" />
 
             </LinearLayout>
 
@@ -248,19 +404,20 @@ stillschweigend jeweils um ein Vierteljahr.
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="horizontal"
-        android:background="#223344">
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:orientation="horizontal"
             android:id="@+id/linearLayoutSign" >
 
-            <TextView
+            <Button
+                android:id="@+id/clear_sign"
                 android:layout_width="wrap_content"
-                android:layout_height="250dp"
-                android:text="Unterschrift" />
+                android:layout_height="wrap_content"
+                android:text="Löschen" />
 
         </LinearLayout>
 

@@ -1,6 +1,6 @@
 package com.example.fehlhaber;
 
-import android.content.ClipData;
+import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
@@ -18,7 +18,11 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Calendar;
@@ -31,24 +35,33 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
-public class Vertrag extends AppCompatActivity {
+public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef;
+
     private EditText nameView;
     private Menu myMenu;
+    private Button cleanSignField;
+    private CaptureSignatureView mSig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.verkaeufer);
 
+        storageRef = storage.getReference();
+
         nameView = findViewById(R.id.fullName);
+        cleanSignField = findViewById(R.id.clear_sign);
+        cleanSignField.setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         LinearLayout mContent = findViewById(R.id.linearLayoutSign);
-        CaptureSignatureView mSig = new CaptureSignatureView(this, null);
+        mSig = new CaptureSignatureView(this, null);
         mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
     }
@@ -86,6 +99,8 @@ public class Vertrag extends AppCompatActivity {
         user.put("last", name);
         user.put("date", currentTime);
 
+        uploadSignaturToStorage();
+
         // Add a new document with a generated ID
         db.collection("users").document(name)
                 .set(user)
@@ -104,6 +119,42 @@ public class Vertrag extends AppCompatActivity {
                         Log.w("conan", "Error writing document", e);
                     }
                 });
+    }
+
+    private void uploadSignaturToStorage() {
+
+
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReference();
+
+        // Create a reference to "mountains.jpg"
+        StorageReference mountainsRef = storageRef.child("mountains.jpg");
+
+        // Create a reference to 'images/mountains.jpg'
+        StorageReference mountainImagesRef = storageRef.child("images/mountains.jpg");
+
+        // While the file names are the same, the references point to different files
+        mountainsRef.getName().equals(mountainImagesRef.getName());    // true
+        mountainsRef.getPath().equals(mountainImagesRef.getPath());    // false
+
+        Bitmap bitmap = mSig.getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                String uploadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                int i=0;
+            }
+        });
     }
 
     private void createMyPDF(){
@@ -138,5 +189,15 @@ public class Vertrag extends AppCompatActivity {
     private void deactivateForm() {
         myMenu.findItem(R.id.save_botton).setVisible(false);
         myMenu.findItem(R.id.ok_saved).setVisible(true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.clear_sign: {
+                mSig.clearCanvas();
+                return;
+            }
+        }
     }
 }
