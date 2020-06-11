@@ -43,8 +43,10 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     private StorageReference storageRef;
 
     private EditText nameView;
+    private EditText maklerView;
+    private EditText objektView;
+
     private Menu myMenu;
-    private Button cleanSignField;
     private CaptureSignatureView mSig;
 
     @Override
@@ -55,7 +57,10 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         storageRef = storage.getReference();
 
         nameView = findViewById(R.id.fullName);
-        cleanSignField = findViewById(R.id.clear_sign);
+        maklerView = findViewById(R.id.nameMakler);
+        objektView = findViewById(R.id.objekt);
+
+        Button cleanSignField = findViewById(R.id.clear_sign);
         cleanSignField.setOnClickListener(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -92,11 +97,14 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
     private void saveDocument() {
         String name = nameView.getText().toString();
+        String maklerName = maklerView.getText().toString();
+        String objectName = objektView.getText().toString();
 
         // Create a new user
         Date currentTime = Calendar.getInstance().getTime();
         Map<String, Object> user = new HashMap<>();
-        user.put("first", name);
+        user.put("makler", maklerName);
+        user.put("objekt", "objectName");
         user.put("last", name);
         user.put("date", currentTime);
 
