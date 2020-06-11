@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -151,7 +152,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String uploadUrl = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                Set<String> uploadUrl = taskSnapshot.getMetadata().getCustomMetadataKeys();
                 int i=0;
             }
         });
