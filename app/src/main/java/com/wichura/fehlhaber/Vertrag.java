@@ -1,4 +1,4 @@
-package com.example.fehlhaber;
+package com.wichura.fehlhaber;
 
 import android.graphics.Bitmap;
 import android.graphics.Paint;
@@ -152,8 +152,8 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Set<String> uploadUrl = taskSnapshot.getMetadata().getCustomMetadataKeys();
-                int i=0;
+                //Set<String> uploadUrl = taskSnapshot.getMetadata();
+
             }
         });
     }
@@ -197,7 +197,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.clear_sign: {
                 mSig.clearCanvas();
-                return;
+
             }
         }
     }

@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:246261606428:android:e142087e79309a892d17d9",
+        "mobilesdk_app_id": "1:246261606428:android:40913bc2a3dbd77d2d17d9",
         "android_client_info": {
-          "package_name": "com.example.fehlhaber"
+          "package_name": "com.wichura.fehlhaber"
         }
       },
       "oauth_client": [

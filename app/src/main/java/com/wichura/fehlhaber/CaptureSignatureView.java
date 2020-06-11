@@ -1,4 +1,4 @@
-package com.example.fehlhaber;
+package com.wichura.fehlhaber;
 
 import android.content.Context;
 import android.graphics.Bitmap;

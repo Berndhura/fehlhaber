@@ -1,4 +1,4 @@
-package com.example.fehlhaber;
+package com.wichura.fehlhaber;
 
 import android.view.LayoutInflater;
 import android.view.View;

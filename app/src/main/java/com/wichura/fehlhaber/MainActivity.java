@@ -1,4 +1,4 @@
-package com.example.fehlhaber;
+package com.wichura.fehlhaber;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
