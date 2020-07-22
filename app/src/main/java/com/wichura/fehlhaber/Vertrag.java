@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.os.Bundle;
 import android.os.Environment;
+import android.print.pdf.PrintedPdfDocument;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -89,7 +90,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
                 saveDocument();
                 return true;
             case R.id.create_pdf:
-                createMyPDF();
+                createMyPDF(null);
                 return true;
             default: return super.onOptionsItemSelected(item);
         }
@@ -99,6 +100,12 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         String name = nameView.getText().toString();
         String maklerName = maklerView.getText().toString();
         String objectName = objektView.getText().toString();
+
+        if (name.equals("")) {
+            Toast.makeText(getApplicationContext(), "Bitte Auftraggeber angeben!",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // Create a new user
         Date currentTime = Calendar.getInstance().getTime();
@@ -166,7 +173,32 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         });
     }
 
-    private void createMyPDF(){
+    private void createMyPDF(View view) {
+        // open a new document
+        //PrintedPdfDocument document = new PrintedPdfDocument(context,
+        //        printAttributes);
+
+        PdfDocument myPdfDocument = new PdfDocument();
+        PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();
+        PdfDocument.Page myPage = myPdfDocument.startPage(myPageInfo);
+
+        // start a page
+        PdfDocument.Page page = myPdfDocument.startPage(myPageInfo);
+
+        // draw something on the page
+        View content = view;
+        content.draw(page.getCanvas());
+
+        // finish the page
+        myPdfDocument.finishPage(page);
+
+       // myPdfDocument.writeTo(getOutputStream());
+
+        //close the document
+        myPdfDocument.close();
+    }
+
+    private void createMyPDF_old(){
         //https://www.youtube.com/watch?v=RjpFwkfRM3U
         PdfDocument myPdfDocument = new PdfDocument();
         PdfDocument.PageInfo myPageInfo = new PdfDocument.PageInfo.Builder(300,600,1).create();

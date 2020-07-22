@@ -13,11 +13,13 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import android.view.View;
+import android.widget.Toast;
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -86,6 +88,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adapter.deleteItem(viewHolder.getAdapterPosition());
             }
         }).attachToRecyclerView(rv);
+
+        adapter.setOnItemClickListener(new NoteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+                Note note = documentSnapshot.toObject(Note.class);
+                Toast.makeText(getApplicationContext(), "Info: " + note.getLast() + ", position: " + position,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

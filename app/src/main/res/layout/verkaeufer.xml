@@ -385,18 +385,6 @@ ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." /
                     android:text="Bilder"
                     android:id="@+id/bilder1" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bilder"
-                    android:id="@+id/bilder2" />
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bilder"
-                    android:id="@+id/bilder3" />
-
             </LinearLayout>
 
         </LinearLayout>
