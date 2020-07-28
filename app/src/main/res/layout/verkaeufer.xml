@@ -410,6 +410,9 @@ ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." /
                 android:layout_height="wrap_content"
                 android:text="Löschen" />
 
+
+
+
         </LinearLayout>
 
     </LinearLayout>

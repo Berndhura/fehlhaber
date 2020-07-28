@@ -1,10 +1,17 @@
 package com.wichura.fehlhaber;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.print.PrintAttributes;
+import android.print.PrintDocumentAdapter;
+import android.print.PrintJob;
+import android.print.PrintManager;
 import android.print.pdf.PrintedPdfDocument;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +40,7 @@ import java.util.Map;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -125,8 +133,6 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
                     public void onSuccess(Void aVoid) {
                         Log.d("conan", "DocumentSnapshot successfully written!");
                         deactivateForm();
-                        Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
-                                Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -174,6 +180,22 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void createMyPDF(View view) {
+
+        Context context=Vertrag.this;
+        PrintManager printManager=(PrintManager)Vertrag.this.getSystemService(context.PRINT_SERVICE);
+        PrintDocumentAdapter adapter=null;
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+            //adapter=view.createPrintDocumentAdapter();
+        }
+        String JobName=getString(R.string.app_name) +"Document";
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.KITKAT){
+            PrintJob printJob=printManager.print(JobName,adapter,new PrintAttributes.Builder().build());
+        }
+
+
+    }
+
+    private void createMyPDF_2old(View view) {
         // open a new document
         //PrintedPdfDocument document = new PrintedPdfDocument(context,
         //        printAttributes);
@@ -230,6 +252,22 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     private void deactivateForm() {
         myMenu.findItem(R.id.save_botton).setVisible(false);
         myMenu.findItem(R.id.ok_saved).setVisible(true);
+        Toast.makeText(getApplicationContext(), "Dokument erfolgreich übermittelt!",
+                Toast.LENGTH_LONG).show();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Dokument erfolgreich gespeichert!")
+                .setMessage("Zurück zur Übersicht?")
+                .setPositiveButton("Zurück", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("Bleiben", null)
+                .show();
     }
 
     @Override
