@@ -172,12 +172,12 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 1 Maklerauftrag" />
+                    android:text="§1 Maklerauftrag" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses. " />
+                    android:text="Der Auftraggeber beauftragt den Makler zum Nachweis von Kaufinteressen oder zur Vermittlung eines Kaufvertragsabschlusses." />
 
             </LinearLayout>
 
@@ -192,15 +192,12 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 2 Auftragsdauer" />
+                    android:text="§2 Auftragsdauer" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Der Auftrag läuft vom ____________ bis ______________ .
-Wird er nicht unter Einhaltung einer Monatsfrist schriftlich gekündigt, verlängert er sich
-stillschweigend jeweils um ein Vierteljahr.
-" />
+                    android:text="Der Auftrag läuft vom ____________ bis ______________ . Wird er nicht unter Einhaltung einer Monatsfrist schriftlich gekündigt, verlängert er sich stillschweigend jeweils um ein Vierteljahr." />
 
             </LinearLayout>
 
@@ -259,15 +256,15 @@ Durchführung dieses Auftrags benötigt. " />
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginRight="8dp"
-                android:text="§ 5Maklergebühr" />
+                android:text="§5 Maklergebühr" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:text="a) Der Auftraggeber verpflichtet sich, dem Makler eine Provision in Höhe von ___ %
 des Gesamtkaufpreises einschließlich Mehrwertsteuer zu zahlen, sobald der Vertrag
 mit einem vom Makler nachgewiesenen Interessenten zustandegekommen ist oder
-der Makler den Vertragsabschluss vermittelt hat. " />
+der Makler den Vertragsabschluss vermittelt hat." />
 
         </LinearLayout>
 
@@ -282,11 +279,11 @@ der Makler den Vertragsabschluss vermittelt hat. " />
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_marginRight="8dp"
-                android:text="§ 6Aufwendungsersatz " />
+                android:text="§6 Aufwendungsersatz" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:text="Der Auftaggeber ist verpflichtet, dem Makler die Aufwendungen zu ersetzen, wenn er
 während der Auftragslaufzeit seine Verkaufsabsicht aufgibt, mit Interessenten des
 Maklers nicht verhandelt oder die Durchführung des Auftrags durch Änderung der
@@ -308,14 +305,14 @@ Aufwendungsersatz voll angerechnet." />
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 7 Berechnung des\nAufwandes " />
+                    android:text="§7 Berechnung des\nAufwandes" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="a) Inserats- und Prospektkosten, Porti, Telefonate u.a.m., sind auf Nachweis\nabzurechnen.
 \nb) Für Reise- und Pkw-Kosten gelten die nach der Einkommensteuer zulässigen
-Ansätze. " />
+Ansätze." />
 
             </LinearLayout>
 
@@ -330,11 +327,11 @@ Ansätze. " />
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 8 Schadensersatz" />
+                    android:text="§8 Schadensersatz" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="Falls der Auftraggeber für Miteigentümer ohne Vertretungsvollmacht handelte und der
 Makler dies nicht wusste, oder falls der Auftraggeber seine Vertragspflichten verletzt,
 ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." />
@@ -352,11 +349,11 @@ ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." /
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 9 Vorzeitige Kündigung\ndurch den Auftraggeber" />
+                    android:text="§9 Vorzeitige Kündigung\ndurch den Auftraggeber" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="Der Auftraggeber kann den Makler-Allein-Auftrag vorzeitig widerrufen, wenn der\nMakler nach vorheriger schriftlicher Abmahnung gegen seine Tätigkeitspflicht (Ziffer 3)\nverstoßen hat.  " />
 
             </LinearLayout>
@@ -372,11 +369,11 @@ ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." /
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:layout_marginRight="8dp"
-                    android:text="§ 10 Außendarstellung" />
+                    android:text="§10 Außendarstellung" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="Folgende Außendarstellung wird vereinbart" />
 
                 <CheckBox
@@ -409,9 +406,6 @@ ist er verpflichtet, den dem Makler hieraus entstehenden Schaden zu ersetzen." /
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Löschen" />
-
-
-
 
         </LinearLayout>
 
