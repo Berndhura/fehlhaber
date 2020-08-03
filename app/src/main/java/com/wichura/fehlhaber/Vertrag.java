@@ -12,13 +12,13 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
-import android.print.pdf.PrintedPdfDocument;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,7 +37,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -50,11 +49,12 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FirebaseStorage storage = FirebaseStorage.getInstance();
     private StorageReference storageRef;
+    private Boolean aussenwerbung;
 
     private EditText nameView;
     private EditText maklerView;
     private EditText objektView;
-
+    private CheckBox bilderChkBx;
     private Menu myMenu;
     private CaptureSignatureView mSig;
 
@@ -79,6 +79,8 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         mSig = new CaptureSignatureView(this, null);
         mContent.addView(mSig, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
+        bilderChkBx = findViewById( R.id.bilder1 );
+        bilderChkBx.setOnClickListener(this);
     }
 
     @Override
@@ -119,11 +121,11 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         Date currentTime = Calendar.getInstance().getTime();
         Map<String, Object> user = new HashMap<>();
         user.put("makler", maklerName);
-        user.put("objekt", "objectName");
+        user.put("aussenwerbung", aussenwerbung);
         user.put("last", name);
         user.put("date", currentTime);
 
-        uploadSignaturToStorage();
+        uploadSignatureToStorage();
 
         // Add a new document with a generated ID
         db.collection("users").document(name)
@@ -143,8 +145,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
                 });
     }
 
-    private void uploadSignaturToStorage() {
-
+    private void uploadSignatureToStorage() {
 
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReference();
@@ -276,6 +277,13 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
             case R.id.clear_sign: {
                 mSig.clearCanvas();
 
+            }
+            case R.id.bilder1: {
+                if ( ((CheckBox)v).isChecked() ) {
+                    this.aussenwerbung = true;
+                } else {
+                    this.aussenwerbung = false;
+                }
             }
         }
     }

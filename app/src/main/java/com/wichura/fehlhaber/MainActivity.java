@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter = new NoteAdapter(options);
 
-        RecyclerView rv = findViewById(R.id.users_list);
+        final RecyclerView rv = findViewById(R.id.users_list);
         rv.setHasFixedSize(true);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
@@ -93,8 +93,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
                 Note note = documentSnapshot.toObject(Note.class);
-                Toast.makeText(getApplicationContext(), "Info: " + note.getLast() + ", position: " + position,
+                Toast.makeText(getApplicationContext(), "Info: " + note.getLast() +
+                                ", position: " + position + " Außenwerbung: " + note.getBilder(),
                         Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(MainActivity.this, Vertrag.class);
+                //intent.putExtra("paket", note )
             }
         });
     }
