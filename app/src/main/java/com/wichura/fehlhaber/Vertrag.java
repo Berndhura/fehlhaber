@@ -1,5 +1,6 @@
 package com.wichura.fehlhaber;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -12,6 +13,10 @@ import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -57,6 +65,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     private CheckBox bilderChkBx;
     private Menu myMenu;
     private CaptureSignatureView mSig;
+    private String unterschrift;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +90,40 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
 
         bilderChkBx = findViewById( R.id.bilder1 );
         bilderChkBx.setOnClickListener(this);
+
+        vonBisClick();
+
+    }
+
+    private void vonBisClick() {
+        final TextView tv = findViewById(R.id.vonbis);
+
+        String para2 = "Der Auftrag läuft vom _____ bis ______________ . " +
+                "Wird er nicht unter Einhaltung einer Monatsfrist schriftlich gekündigt, " +
+                "verlängert er sich stillschweigend jeweils um ein Vierteljahr.";
+
+        SpannableString ss = new SpannableString(para2);
+        ClickableSpan clickVon = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                final Calendar newCalendar = Calendar.getInstance();
+                DatePickerDialog  startTime = new DatePickerDialog(Vertrag.this, new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        tv.setText("Der Auftrag läuft vom " + (newDate.getTime()));
+                    }
+
+                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+                startTime.show();
+            }
+        };
+
+        ss.setSpan(clickVon, 22, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tv.setText(ss);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -175,8 +218,9 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 //Set<String> uploadUrl = taskSnapshot.getMetadata();
-
+                unterschrift = taskSnapshot.getMetadata().getReference().toString();
             }
+
         });
     }
 
