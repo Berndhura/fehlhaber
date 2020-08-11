@@ -92,6 +92,7 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         bilderChkBx.setOnClickListener(this);
 
         vonBisClick();
+        para4();
 
     }
 
@@ -121,6 +122,58 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         };
 
         ss.setSpan(clickVon, 22, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tv.setText(ss);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    private void para4() {
+        final TextView tv = findViewById(R.id.para5);
+
+        String para5 = "a) Der Auftraggeber verpflichtet sich, dem Makler eine Provision in Höhe von ___ %\n" +
+                "des Gesamtkaufpreises einschließlich Mehrwertsteuer zu zahlen, sobald der Vertrag\n" +
+                "mit einem vom Makler nachgewiesenen Interessenten zustandegekommen ist oder\n" +
+                "der Makler den Vertragsabschluss vermittelt hat.";
+
+        SpannableString ss = new SpannableString(para5);
+        ClickableSpan clickVon = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(Vertrag.this);
+                alertDialog.setTitle("Provision");
+
+
+                final EditText input = new EditText(Vertrag.this);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT);
+                input.setLayoutParams(lp);
+                alertDialog.setView(input);
+
+                alertDialog.setPositiveButton("Übernehmen",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                String provision = input.getText().toString();
+                                String para5 = "a) Der Auftraggeber verpflichtet sich, dem Makler eine Provision in Höhe von " + provision + "%\n" +
+                                        "des Gesamtkaufpreises einschließlich Mehrwertsteuer zu zahlen, sobald der Vertrag\n" +
+                                        "mit einem vom Makler nachgewiesenen Interessenten zustandegekommen ist oder\n" +
+                                        "der Makler den Vertragsabschluss vermittelt hat.";
+                                tv.setText(para5);
+                            }
+                        });
+
+                alertDialog.setNegativeButton("Abbrechen",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+
+                alertDialog.show();
+            }
+        };
+
+        ss.setSpan(clickVon, 77, 82, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         tv.setText(ss);
         tv.setMovementMethod(LinkMovementMethod.getInstance());

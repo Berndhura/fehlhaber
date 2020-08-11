@@ -236,7 +236,7 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:text="Der Auftraggeber ist demgegenüber verpflichtet,\n a) während der Auftragslaufzeit keine eigenen Bemühungen zum Verkauf des
 Objektes zu unternehmen. Sollte er dennoch Kaufinteressenten für das Objekt
 gewinnen können, so sind diese an den Makler zu verweisen. \n b) während der Auftragslaufzeit keine Maklerdienste Dritter in Bezug auf das
@@ -259,12 +259,9 @@ Durchführung dieses Auftrags benötigt. " />
                 android:text="§5 Maklergebühr" />
 
             <TextView
+                android:id="@+id/para5"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="a) Der Auftraggeber verpflichtet sich, dem Makler eine Provision in Höhe von ___ %
-des Gesamtkaufpreises einschließlich Mehrwertsteuer zu zahlen, sobald der Vertrag
-mit einem vom Makler nachgewiesenen Interessenten zustandegekommen ist oder
-der Makler den Vertragsabschluss vermittelt hat." />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
