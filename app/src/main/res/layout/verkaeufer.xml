@@ -195,7 +195,7 @@
                     android:text="§2 Auftragsdauer" />
 
                 <TextView
-                    android:id="@+id/vonbis"
+                    android:id="@+id/start"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 

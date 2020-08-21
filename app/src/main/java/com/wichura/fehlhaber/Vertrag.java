@@ -36,6 +36,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -45,11 +46,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
 
 
 public class Vertrag extends AppCompatActivity implements View.OnClickListener {
@@ -66,6 +70,10 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
     private Menu myMenu;
     private CaptureSignatureView mSig;
     private String unterschrift;
+    private String text;
+    private SpannableString ss;
+    private TextView tv;
+    private ClickableSpan clickableSpan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,38 +99,50 @@ public class Vertrag extends AppCompatActivity implements View.OnClickListener {
         bilderChkBx = findViewById( R.id.bilder1 );
         bilderChkBx.setOnClickListener(this);
 
-        vonBisClick();
+        startDate();
         para4();
 
     }
 
-    private void vonBisClick() {
-        final TextView tv = findViewById(R.id.vonbis);
-
-        String para2 = "Der Auftrag läuft vom _____ bis ______________ . " +
+    /*
+    String para2 = "Der Auftrag läuft vom _____ bis ______________ . " +
                 "Wird er nicht unter Einhaltung einer Monatsfrist schriftlich gekündigt, " +
                 "verlängert er sich stillschweigend jeweils um ein Vierteljahr.";
 
-        SpannableString ss = new SpannableString(para2);
-        ClickableSpan clickVon = new ClickableSpan() {
+     */
+
+
+
+    private void startDate() {
+        tv = findViewById(R.id.start);
+        text = "Event starts on CLICKME";
+        ss = new SpannableString(text);
+
+        clickableSpan = new ClickableSpan() {
             @Override
-            public void onClick(@NonNull View widget) {
+            public void onClick(@NonNull final View widget) {
                 final Calendar newCalendar = Calendar.getInstance();
                 DatePickerDialog  startTime = new DatePickerDialog(Vertrag.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar newDate = Calendar.getInstance();
                         newDate.set(year, monthOfYear, dayOfMonth);
-                        tv.setText("Der Auftrag läuft vom " + (newDate.getTime()));
+
+                        String newText = "Event starts on " + newDate.getTime();
+                        adaptText(newText, (newDate.getTime()).toString().length());
                     }
-
                 }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
-
                 startTime.show();
             }
         };
 
-        ss.setSpan(clickVon, 22, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, 15, 23, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        tv.setText(ss);
+        tv.setMovementMethod(LinkMovementMethod.getInstance());
+    }
 
+    private void adaptText(String text, int length) {
+        ss = new SpannableString(text);
+        ss.setSpan(clickableSpan, 15, 15 + length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         tv.setText(ss);
         tv.setMovementMethod(LinkMovementMethod.getInstance());
     }
